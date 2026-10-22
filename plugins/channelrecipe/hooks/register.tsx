@@ -10,8 +10,10 @@ const PANE = 'channelrecipe'
 const TITLE = 'ChannelRecipe'
 const PER_PAGE = 6
 const FREE = new Set(['setup_check', 'list_styles', 'get_style_pick', 'quote', 'progress', 'list_videos',
-  'open_in_studio', 'cloud_balance', 'clone_style_look'])
-const PAID = new Set(['make_videos', 'clone_style'])
+  'open_in_studio', 'cloud_balance', 'clone_style_look', 'product_ideas', 'products'])
+const PAID = new Set(['make_videos', 'clone_style', 'build_product'])
+// Reading ChannelRecipe's niche database (the account's channelrecipe server, the folder's or this plugin's) is free
+const NICHE_READ = /^mcp__(?:plugin_channelrecipe_)?channelrecipe__(?:list_niches|list_niche_subjects|list_niche_channels)$/
 // Studio's tools from this folder's own server (mcp__studio__…) or from this plugin's (mcp__plugin_channelrecipe_studio__…)
 const STUDIO_TOOL = /^mcp__(?:plugin_channelrecipe_)?studio__([a-z_]+)$/
 
@@ -249,6 +251,11 @@ export const register: Register = on => {
       return { decision: 'allow', reason: 'ChannelRecipe: a free Studio tool.' }
     }
     return verdict
+  }).catch(($, e, next) => next(e))
+
+  on('tool.check', { tool: NICHE_READ }, async ($, e, next) => {
+    const verdict = await next(e)
+    return verdict.decision === 'ask' ? { decision: 'allow', reason: 'ChannelRecipe: reading the niche database is free.' } : verdict
   }).catch(($, e, next) => next(e))
 
   // When Claude lists the styles or starts videos, show them in the panel too.

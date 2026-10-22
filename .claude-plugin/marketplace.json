@@ -1,12 +1,15 @@
 {
   "name": "channelrecipe",
   "description": "ChannelRecipe's Claude Code plugins: make faceless YouTube videos with ChannelRecipe Studio from Claude Code.",
-  "owner": { "name": "ChannelRecipe", "url": "https://channelrecipe.com" },
+  "owner": {
+    "name": "ChannelRecipe",
+    "url": "https://channelrecipe.com"
+  },
   "plugins": [
     {
       "name": "channelrecipe",
       "source": "./plugins/channelrecipe",
-      "description": "ChannelRecipe Studio in Claude Code: pick or clone a style, render on this computer or Studio Cloud, and watch your videos, with a panel for styles, render costs and your videos.",
+      "description": "ChannelRecipe Studio in Claude Code: find your niche with the live niche database (cross-niche arbitrage), pick, clone or combine styles, render on this computer or Studio Cloud (in testing), build a digital product, and watch your videos, with a panel for styles, render costs and your videos.",
       "category": "productivity"
     }
   ]

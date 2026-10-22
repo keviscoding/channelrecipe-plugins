@@ -1,16 +1,32 @@
 {
   "name": "channelrecipe",
   "displayName": "ChannelRecipe Studio",
-  "version": "1.0.0",
-  "description": "Make faceless YouTube videos with your ChannelRecipe Studio from Claude Code: pick a style, clone one from YouTube, render on this computer or Studio Cloud, and watch your videos.",
-  "author": { "name": "ChannelRecipe", "url": "https://channelrecipe.com" },
+  "version": "1.1.0",
+  "description": "Make faceless YouTube videos with your ChannelRecipe Studio from Claude Code: find your niche with the live niche database, pick, clone or combine styles, render on this computer or Studio Cloud (in testing), build a digital product, and watch your videos.",
+  "author": {
+    "name": "ChannelRecipe",
+    "url": "https://channelrecipe.com"
+  },
   "homepage": "https://channelrecipe.com",
-  "keywords": ["youtube", "video", "faceless", "channelrecipe"],
+  "keywords": [
+    "youtube",
+    "video",
+    "faceless",
+    "channelrecipe",
+    "studio"
+  ],
   "types": "./types/index.d.ts",
   "mcpServers": {
     "studio": {
       "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/server/launch.mjs", "${CLAUDE_PROJECT_DIR}"]
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/server/launch.mjs",
+        "${CLAUDE_PROJECT_DIR}"
+      ]
+    },
+    "channelrecipe": {
+      "type": "http",
+      "url": "https://channelrecipe.com/mcp"
     }
   }
 }

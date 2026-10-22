@@ -28,6 +28,16 @@ test('free Studio tools run without a prompt and paid ones are always asked', as
   expect((await $.tool.check({ tool: 'mcp__plugin_channelrecipe_studio__clone_style', input: {} })).decision).toBe('ask')
 })
 
+test('products: ideas and status are free, building one is always asked; niche reads are free', async ($, on) => {
+  on('tool.check', ({}, e) => ({ decision: e.tool.endsWith('build_product') ? 'allow' : 'ask' }))
+  expect((await $.tool.check({ tool: 'mcp__studio__build_product', input: {} })).decision).toBe('ask')
+  expect((await $.tool.check({ tool: 'mcp__studio__product_ideas', input: {} })).decision).toBe('allow')
+  expect((await $.tool.check({ tool: 'mcp__plugin_channelrecipe_studio__products', input: {} })).decision).toBe('allow')
+  expect((await $.tool.check({ tool: 'mcp__plugin_channelrecipe_channelrecipe__list_niche_channels', input: {} })).decision).toBe('allow')
+  expect((await $.tool.check({ tool: 'mcp__channelrecipe__list_niches', input: {} })).decision).toBe('allow')
+  expect((await $.tool.check({ tool: 'mcp__channelrecipe__generate_script', input: {} })).decision).toBe('ask')
+})
+
 test('a free tool is allowed and a deny is left alone', async ($, on) => {
   on('tool.check', ({}, e) => ({ decision: e.tool.endsWith('progress') ? 'deny' : 'ask' }))
   expect((await $.tool.check({ tool: 'mcp__studio__list_styles', input: {} })).decision).toBe('allow')
@@ -51,7 +61,7 @@ test('the panel lists styles, sends the chosen one to the conversation and shows
     sent.push(e.text)
     return { text: e.text }
   })
-  await $.command.run({ command: 'studio' })
+  await $.command.run({ command: 'studio', args: '' } as never)
   for (const surface of ['terminal', 'desktop'] as const) {
     const ui = await $.ui.mount({ plugin: 'channelrecipe', surface, ...PANE })
     expect((await ui.find({ text: /Editorial Documentary/ }))).toBeDefined()
@@ -77,7 +87,7 @@ test('on the desktop a style card shows its picture as an Svg with the JPEG insi
   on('fs.read', ({}, e) => (String(e.path).endsWith('.jpg') ? { value: { base64: '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAASACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDl6KKK8c/RwooooAKKKKACiiigD//Z' } } : { deny: 'no pointer here' }))
   on('ui.open', () => ({ value: { isPlaced: true } }))
   on('env.get', () => ({ value: undefined }))
-  await $.command.run({ command: 'studio' })
+  await $.command.run({ command: 'studio', args: '' } as never)
   const ui = await $.ui.mount({ plugin: 'channelrecipe', surface: 'desktop', ...PANE })
   const svg = await ui.find({ type: 'Svg' })
   expect(svg).toBeDefined()
