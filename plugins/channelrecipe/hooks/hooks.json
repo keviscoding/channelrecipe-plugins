@@ -1,0 +1,4 @@
+{
+  "description": "ChannelRecipe Studio's panel, /studio command and tool permissions",
+  "modules": ["./register.tsx"]
+}

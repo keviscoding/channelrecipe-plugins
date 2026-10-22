@@ -1,0 +1,16 @@
+{
+  "name": "channelrecipe",
+  "displayName": "ChannelRecipe Studio",
+  "version": "1.0.0",
+  "description": "Make faceless YouTube videos with your ChannelRecipe Studio from Claude Code: pick a style, clone one from YouTube, render on this computer or Studio Cloud, and watch your videos.",
+  "author": { "name": "ChannelRecipe", "url": "https://channelrecipe.com" },
+  "homepage": "https://channelrecipe.com",
+  "keywords": ["youtube", "video", "faceless", "channelrecipe"],
+  "types": "./types/index.d.ts",
+  "mcpServers": {
+    "studio": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/server/launch.mjs", "${CLAUDE_PROJECT_DIR}"]
+    }
+  }
+}
