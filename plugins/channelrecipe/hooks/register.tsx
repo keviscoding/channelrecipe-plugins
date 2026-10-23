@@ -11,7 +11,7 @@ const TITLE = 'ChannelRecipe'
 const PER_PAGE = 6
 const FREE = new Set(['setup_check', 'list_styles', 'get_style_pick', 'quote', 'progress', 'list_videos',
   'open_in_studio', 'cloud_balance', 'clone_style_look', 'product_ideas', 'products'])
-const PAID = new Set(['make_videos', 'clone_style', 'build_product'])
+const PAID = new Set(['make_videos', 'clone_style', 'build_product', 'resume_video'])
 // Reading ChannelRecipe's niche database (the account's channelrecipe server, the folder's or this plugin's) is free
 const NICHE_READ = /^mcp__(?:plugin_channelrecipe_)?channelrecipe__(?:list_niches|list_niche_subjects|list_niche_channels)$/
 // Studio's tools from this folder's own server (mcp__studio__…) or from this plugin's (mcp__plugin_channelrecipe_studio__…)

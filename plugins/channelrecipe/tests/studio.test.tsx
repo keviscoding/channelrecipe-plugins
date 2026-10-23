@@ -26,6 +26,7 @@ test('free Studio tools run without a prompt and paid ones are always asked', as
   on('tool.check', () => ({ decision: 'allow' }))
   expect((await $.tool.check({ tool: 'mcp__studio__make_videos', input: {} })).decision).toBe('ask')
   expect((await $.tool.check({ tool: 'mcp__plugin_channelrecipe_studio__clone_style', input: {} })).decision).toBe('ask')
+  expect((await $.tool.check({ tool: 'mcp__plugin_channelrecipe_studio__resume_video', input: {} })).decision).toBe('ask')
 })
 
 test('products: ideas and status are free, building one is always asked; niche reads are free', async ($, on) => {
