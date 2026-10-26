@@ -27,6 +27,18 @@ test('free Studio tools run without a prompt and paid ones are always asked', as
   expect((await $.tool.check({ tool: 'mcp__studio__make_videos', input: {} })).decision).toBe('ask')
   expect((await $.tool.check({ tool: 'mcp__plugin_channelrecipe_studio__clone_style', input: {} })).decision).toBe('ask')
   expect((await $.tool.check({ tool: 'mcp__plugin_channelrecipe_studio__resume_video', input: {} })).decision).toBe('ask')
+  expect((await $.tool.check({ tool: 'mcp__plugin_channelrecipe_studio__style_sample', input: {} })).decision).toBe('ask')
+})
+
+test('deleting a video or a style is always asked, even where the whole server is allowed', async ($, on) => {
+  on('tool.check', () => ({ decision: 'allow' }))
+  expect((await $.tool.check({ tool: 'mcp__plugin_channelrecipe_studio__delete_video', input: {} })).decision).toBe('ask')
+  expect((await $.tool.check({ tool: 'mcp__studio__delete_style', input: {} })).decision).toBe('ask')
+})
+
+test('editing a learned style is free', async ($, on) => {
+  on('tool.check', () => ({ decision: 'ask' }))
+  expect((await $.tool.check({ tool: 'mcp__plugin_channelrecipe_studio__edit_style', input: {} })).decision).toBe('allow')
 })
 
 test('products: ideas and status are free, building one is always asked; niche reads are free', async ($, on) => {

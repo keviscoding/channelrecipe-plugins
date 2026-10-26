@@ -1,6 +1,6 @@
 // ChannelRecipe Studio in Claude Code: a panel with three tabs (Styles, Render, My videos) drawn from the creator's
 // own Studio on localhost, a /studio command that opens it, and the permission rule for Studio's tools: the free
-// ones run without a prompt, the paid ones (make_videos, clone_style) are always asked.
+// ones run without a prompt; the paid ones (make_videos, clone_style, ...) and the deletes are always asked.
 import { atom, read, update } from 'claude-code'
 import type { EngineInterface, Register } from 'claude-code'
 
@@ -10,8 +10,10 @@ const PANE = 'channelrecipe'
 const TITLE = 'ChannelRecipe'
 const PER_PAGE = 6
 const FREE = new Set(['setup_check', 'list_styles', 'get_style_pick', 'quote', 'progress', 'list_videos',
-  'open_in_studio', 'cloud_balance', 'clone_style_look', 'product_ideas', 'products'])
-const PAID = new Set(['make_videos', 'clone_style', 'build_product', 'resume_video'])
+  'open_in_studio', 'cloud_balance', 'clone_style_look', 'product_ideas', 'products', 'edit_style'])
+const PAID = new Set(['make_videos', 'clone_style', 'build_product', 'resume_video', 'style_sample'])
+// a video or a learned style moved into Studio's trash (30 days, Restore in Recently deleted): always asked too
+const DELETES = new Set(['delete_video', 'delete_style'])
 // Reading ChannelRecipe's niche database (the account's channelrecipe server, the folder's or this plugin's) is free
 const NICHE_READ = /^mcp__(?:plugin_channelrecipe_)?channelrecipe__(?:list_niches|list_niche_subjects|list_niche_channels)$/
 // Studio's tools from this folder's own server (mcp__studio__…) or from this plugin's (mcp__plugin_channelrecipe_studio__…)
@@ -246,6 +248,9 @@ export const register: Register = on => {
     const verdict = await next(e)
     if (PAID.has(name) && verdict.decision === 'allow') {
       return { decision: 'ask', reason: 'ChannelRecipe: this spends money, so you are always asked.' }
+    }
+    if (DELETES.has(name) && verdict.decision === 'allow') {
+      return { decision: 'ask', reason: "ChannelRecipe: this moves it to Studio's trash, so you are always asked." }
     }
     if (FREE.has(name) && verdict.decision === 'ask') {
       return { decision: 'allow', reason: 'ChannelRecipe: a free Studio tool.' }
