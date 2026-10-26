@@ -13,8 +13,8 @@ What they gave: $ARGUMENTS
 
 ## 1. Get the data (free)
 
-ChannelRecipe's niche database is the `channelrecipe` server's tools. In a Studio folder it is already connected;
-from this plugin, sign in once with `/mcp` → channelrecipe (it opens channelrecipe.com):
+ChannelRecipe's niche database is the `channelrecipe` server's tools (in a Studio folder they are connected; from
+the plugin, the ChannelRecipe connector):
 - `list_niches`: the niches in the live database. Always call it first; never invent a niche name.
 - `list_niche_subjects(niche)`: the subjects pulling views in that niche right now.
 - `list_niche_channels(niche)`: channels in it with subscribers, recent average views and recent titles.
