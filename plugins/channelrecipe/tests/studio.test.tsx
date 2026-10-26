@@ -36,6 +36,15 @@ test('deleting a video or a style is always asked, even where the whole server i
   expect((await $.tool.check({ tool: 'mcp__studio__delete_style', input: {} })).decision).toBe('ask')
 })
 
+test('Studio 107: carrying the queue on and recovering a video are always asked; the queue, Style Lab and fix-its are free', async ($, on) => {
+  on('tool.check', ({}, e) => ({ decision: /carry_on_queue|recover_video/.test(e.tool) ? 'allow' : 'ask' }))
+  expect((await $.tool.check({ tool: 'mcp__plugin_channelrecipe_studio__carry_on_queue', input: {} })).decision).toBe('ask')
+  expect((await $.tool.check({ tool: 'mcp__studio__recover_video', input: {} })).decision).toBe('ask')
+  for (const free of ['queue', 'style_lab', 'fix_ffmpeg', 'fix_node', 'fix_claude_cli', 'fix_graphics_browser']) {
+    expect((await $.tool.check({ tool: 'mcp__plugin_channelrecipe_studio__' + free, input: {} })).decision).toBe('allow')
+  }
+})
+
 test('editing a learned style is free', async ($, on) => {
   on('tool.check', () => ({ decision: 'ask' }))
   expect((await $.tool.check({ tool: 'mcp__plugin_channelrecipe_studio__edit_style', input: {} })).decision).toBe('allow')

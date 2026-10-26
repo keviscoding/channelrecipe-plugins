@@ -10,8 +10,10 @@ const PANE = 'channelrecipe'
 const TITLE = 'ChannelRecipe'
 const PER_PAGE = 6
 const FREE = new Set(['setup_check', 'list_styles', 'get_style_pick', 'quote', 'progress', 'list_videos',
-  'open_in_studio', 'cloud_balance', 'clone_style_look', 'product_ideas', 'products', 'edit_style'])
-const PAID = new Set(['make_videos', 'clone_style', 'build_product', 'resume_video', 'style_sample'])
+  'open_in_studio', 'cloud_balance', 'clone_style_look', 'product_ideas', 'products', 'edit_style', 'style_lab',
+  'queue', 'fix_graphics_browser', 'fix_speech_model', 'fix_ffmpeg', 'fix_node', 'fix_claude_cli'])
+const PAID = new Set(['make_videos', 'clone_style', 'build_product', 'resume_video', 'style_sample',
+  'carry_on_queue', 'recover_video'])
 // a video or a learned style moved into Studio's trash (30 days, Restore in Recently deleted): always asked too
 const DELETES = new Set(['delete_video', 'delete_style'])
 // Reading ChannelRecipe's niche database (the account's channelrecipe server, the folder's or this plugin's) is free
