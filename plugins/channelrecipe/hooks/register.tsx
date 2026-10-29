@@ -11,7 +11,9 @@ const TITLE = 'ChannelRecipe'
 const PER_PAGE = 6
 const FREE = new Set(['setup_check', 'list_styles', 'get_style_pick', 'quote', 'progress', 'list_videos',
   'open_in_studio', 'cloud_balance', 'clone_style_look', 'product_ideas', 'products', 'edit_style', 'style_lab',
-  'queue', 'fix_graphics_browser', 'fix_speech_model', 'fix_ffmpeg', 'fix_node', 'fix_claude_cli'])
+  'queue', 'fix_graphics_browser', 'fix_speech_model', 'fix_ffmpeg', 'fix_node', 'fix_claude_cli',
+  // the niche agent (/niche-agent, Studio 114+): public YouTube pages, the niche database, saved ideas; never spends
+  'niche_teaching', 'niche_breakouts', 'yt_search', 'yt_channel_stats', 'yt_look', 'save_ideas', 'list_ideas', 'use_idea'])
 const PAID = new Set(['make_videos', 'clone_style', 'build_product', 'resume_video', 'style_sample',
   'carry_on_queue', 'recover_video'])
 // a video or a learned style moved into Studio's trash (30 days, Restore in Recently deleted): always asked too
