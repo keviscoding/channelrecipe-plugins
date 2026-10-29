@@ -117,3 +117,12 @@ test('on the desktop a style card shows its picture as an Svg with the JPEG insi
   expect(svg?.props.alt).toBe('Editorial Documentary')
   await ui.unmount()
 })
+
+test('the niche agent\'s tools are free: YouTube reads, the database, saved ideas', async ($, on) => {
+  on('tool.check', () => ({ decision: 'ask' }))
+  for (const name of ['niche_teaching', 'niche_breakouts', 'yt_search', 'yt_channel_stats', 'yt_look', 'save_ideas',
+    'list_ideas', 'use_idea']) {
+    expect((await $.tool.check({ tool: `mcp__plugin_channelrecipe_studio__${name}`, input: {} })).decision).toBe('allow')
+    expect((await $.tool.check({ tool: `mcp__studio__${name}`, input: {} })).decision).toBe('allow')
+  }
+})

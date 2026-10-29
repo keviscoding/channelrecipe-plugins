@@ -2,6 +2,10 @@
 
 Make faceless YouTube videos with your [ChannelRecipe](https://channelrecipe.com) Studio, from Claude Code.
 
+- **Find a niche with proof**: `/channelrecipe:niche-agent` (Studio 114+) finds small, new channels whose videos beat
+  their subscriber count many times over, checks the format repeats and isn't AI slop, and gives you video ideas with
+  the proof video behind each one. Free: it reads public YouTube pages on your computer. Saved ideas appear in
+  Studio's Create page.
 - **Find your niche** with ChannelRecipe's live niche database: `/channelrecipe:niche-strategy` turns it into channel
   ideas (a winning format bent toward a new audience, an open lane, or two channels combined), with the evidence.
 - **Pick a style** from a panel of picture cards, or ask Claude to show the style gallery.
