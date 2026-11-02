@@ -18,6 +18,8 @@ const PAID = new Set(['make_videos', 'clone_style', 'build_product', 'resume_vid
   'carry_on_queue', 'recover_video'])
 // a video or a learned style moved into Studio's trash (30 days, Restore in Recently deleted): always asked too
 const DELETES = new Set(['delete_video', 'delete_style'])
+// keeping a style on trial uses one of the plan's style clones (Studio 124): always asked too
+const KEEPS = new Set(['keep_style'])
 // Reading ChannelRecipe's niche database (the account's channelrecipe server, the folder's or this plugin's) is free
 const NICHE_READ = /^mcp__(?:plugin_channelrecipe_)?channelrecipe__(?:list_niches|list_niche_subjects|list_niche_channels)$/
 // Studio's tools from this folder's own server (mcp__studio__…) or from this plugin's (mcp__plugin_channelrecipe_studio__…)
@@ -255,6 +257,9 @@ export const register: Register = on => {
     }
     if (DELETES.has(name) && verdict.decision === 'allow') {
       return { decision: 'ask', reason: "ChannelRecipe: this moves it to Studio's trash, so you are always asked." }
+    }
+    if (KEEPS.has(name) && verdict.decision === 'allow') {
+      return { decision: 'ask', reason: "ChannelRecipe: this uses one of your plan's style clones, so you are always asked." }
     }
     if (FREE.has(name) && verdict.decision === 'ask') {
       return { decision: 'allow', reason: 'ChannelRecipe: a free Studio tool.' }
